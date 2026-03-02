@@ -165,7 +165,7 @@ export default function App() {
           THE PATTERN.
         </h1>
         <p style={{ fontSize: 12, color: "#7E7E7E", maxWidth: 560, lineHeight: 1.8, margin: 0, fontFamily: "'Space Mono', monospace" }}>
-          Not a methodology. Something observed across fifteen years and three industries. Four questions, asked in order, every time. Phase 04 feeds back into 01.
+          Observed across fifteen years of learning alongside engineers, finance teams, sales, and customers. 
         </p>
       </div>
 
