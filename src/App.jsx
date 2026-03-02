@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 const phases = [
@@ -139,7 +138,7 @@ export default function App() {
       background: "#0D0D0D",
       minHeight: "100vh",
       color: "#D4D4D4",
-      padding: "40px 24px",
+      padding: "40px 20px",
       boxSizing: "border-box",
     }}>
       <style>{`
@@ -154,6 +153,34 @@ export default function App() {
           to { opacity: 1; transform: translateY(0); }
         }
         .fade-in { animation: fadeSlide 0.28s ease forwards; }
+
+        .phase-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 10px;
+          max-width: 900px;
+          margin: 0 auto 32px;
+        }
+
+        .content-grid {
+          display: grid;
+          grid-template-columns: 1fr 1.6fr;
+          gap: 20px;
+          margin-bottom: 28px;
+        }
+
+        @media (max-width: 640px) {
+          .phase-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+          }
+          .content-grid {
+            grid-template-columns: 1fr;
+          }
+          .tagline-row {
+            flex-wrap: wrap;
+          }
+        }
       `}</style>
 
       {/* Header */}
@@ -165,18 +192,18 @@ export default function App() {
           THE PATTERN.
         </h1>
         <p style={{ fontSize: 12, color: "#7E7E7E", maxWidth: 560, lineHeight: 1.8, margin: 0, fontFamily: "'Space Mono', monospace" }}>
-          Observed across fifteen years of learning alongside engineers, finance teams, sales, and customers. 
+          Observed across fifteen years of learning alongside engineers, finance teams, sales, and customers.
         </p>
       </div>
 
       {/* Phase Selector */}
-      <div style={{ maxWidth: 900, margin: "0 auto 32px", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
+      <div className="phase-grid">
         {phases.map(phase => (
           <button key={phase.id} className="phase-btn" onClick={() => { setActive(phase.id); setExpandedExample(null); }}>
             <div
               className="phase-inner"
               style={{
-                padding: "18px 16px",
+                padding: "16px 14px",
                 border: `1px solid ${active === phase.id ? phase.color : "#222"}`,
                 borderRadius: 4,
                 background: active === phase.id ? `${phase.color}10` : "#141414",
@@ -187,21 +214,21 @@ export default function App() {
             >
               {phase.isFeedback && (
                 <div style={{
-                  position: "absolute", top: 10, right: 12,
+                  position: "absolute", top: 8, right: 10,
                   display: "flex", alignItems: "center", gap: 4,
                   background: "#141414",
                   border: `1px solid ${active === phase.id ? "#C39BD360" : "#2A2A2A"}`,
-                  borderRadius: 20, padding: "2px 7px",
+                  borderRadius: 20, padding: "2px 6px",
                   transition: "all 0.22s",
                 }}>
                   <span style={{ fontSize: 10, color: "#C39BD3" }}>↺</span>
                   <span style={{ fontSize: 8, letterSpacing: 2, color: "#7E7E7E", fontFamily: "'Space Mono', monospace" }}>01</span>
                 </div>
               )}
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 30, color: active === phase.id ? phase.color : "#3A3A3A", lineHeight: 1, marginBottom: 6 }}>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, color: active === phase.id ? phase.color : "#3A3A3A", lineHeight: 1, marginBottom: 6 }}>
                 {phase.number}
               </div>
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 11, letterSpacing: 2, color: active === phase.id ? "#F0F0F0" : "#7E7E7E", lineHeight: 1.35 }}>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 10, letterSpacing: 2, color: active === phase.id ? "#F0F0F0" : "#7E7E7E", lineHeight: 1.35 }}>
                 {phase.label}
               </div>
               {active === phase.id && (
@@ -216,15 +243,15 @@ export default function App() {
       {activePhase && (
         <div key={active} className="fade-in" style={{ maxWidth: 900, margin: "0 auto" }}>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
-            <div style={{ width: 36, height: 1, background: activePhase.color }} />
+          <div className="tagline-row" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
+            <div style={{ width: 36, height: 1, background: activePhase.color, flexShrink: 0 }} />
             <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: activePhase.color, letterSpacing: 3, textTransform: "uppercase" }}>
               {activePhase.tagline}
             </span>
             <div style={{ flex: 1, height: 1, background: "#1A1A1A" }} />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: 20, marginBottom: 28 }}>
+          <div className="content-grid">
             {/* Mental Model */}
             <div style={{ background: "#141414", border: "1px solid #1E1E1E", borderRadius: 4, padding: "22px 20px" }}>
               <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 12, letterSpacing: 3, color: "#7E7E7E", marginBottom: 18 }}>
@@ -260,7 +287,7 @@ export default function App() {
 
             {/* Examples */}
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 12, letterSpacing: 3, color: "#7E7E7E", marginBottom: 4, display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 12, letterSpacing: 3, color: "#7E7E7E", marginBottom: 4, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
                 <span>FROM MY WORK</span>
                 {activePhase.examples.some(e => e.iteration) && (
                   <span style={{ fontSize: 9, color: "#7E7E7E", letterSpacing: 1, fontFamily: "'Space Mono', monospace", textTransform: "none", fontWeight: "normal" }}>
@@ -291,7 +318,7 @@ export default function App() {
                       {ex.co.toUpperCase()}
                     </span>
                     {ex.iteration && (
-                      <span style={{ fontSize: 9, color: "#7E7E7E", fontFamily: "'Space Mono', monospace" }}>
+                      <span style={{ fontSize: 9, color: "#7E7E7E", fontFamily: "'Space Mono', monospace", marginLeft: 8, flexShrink: 0 }}>
                         {expandedExample === i ? "▴ less" : "▾ how it iterated"}
                       </span>
                     )}
@@ -321,9 +348,9 @@ export default function App() {
           </div>
 
           {/* Bottom nav */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, padding: "20px 0", borderTop: "1px solid #181818", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "20px 0", borderTop: "1px solid #181818", flexWrap: "wrap" }}>
             {phases.map((p, i) => (
-              <div key={p.id} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div key={p.id} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <button onClick={() => { setActive(p.id); setExpandedExample(null); }} style={{
                   background: "none", border: "none", cursor: "pointer",
                   fontFamily: "'Bebas Neue', sans-serif", fontSize: 11, letterSpacing: 2,
